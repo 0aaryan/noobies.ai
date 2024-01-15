@@ -1,5 +1,5 @@
 HUGO = {
-    "title": "Title of the Blog Post #title should be in quotes and should follow yaml syntax",
+    "title": "Title (title should be seo optimized and trendy)",  # title should be in quotes and should follow yaml syntax",
     "date": "2020-01-25  # today's date in YYYY-MM-DD format",
     "tags": [
         "tag1",

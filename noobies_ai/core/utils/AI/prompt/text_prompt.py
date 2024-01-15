@@ -11,7 +11,8 @@ GENERATE_BLOG_FROM_BLOG = {
                         -give full output without code block as plain text
                         -output should be in proper json format use double quotes for keys and values
                         -if you use double quotes inside content use a backslash before it
-                        -output should be able to parse by json parser without any error""",
+                        -output should be able to parse by json parser without any error
+                        complete the output under 512 tokens""",
     "input_variables": ["topic", "syntax", "date", "instructions"],
 }
 
