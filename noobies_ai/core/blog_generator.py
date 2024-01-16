@@ -1,11 +1,10 @@
-from utils import *
-from utils.downloader.text_downloader import BlogDownloader
-from utils.AI.textAI import TextAI
-from utils.AI.imageAI import ImageAI
-from utils.AI.prompt.text_prompt import GENERATE_BLOG_FROM_BLOG
-from utils.AI.syntax.blog_syntax import HUGO
-from utils.converter.blog_converter import BlogConverter
-from utils.converter.image_converter import ImageConverter
+from .utils.downloader.text_downloader import BlogDownloader
+from .utils.AI.textAI import TextAI
+from .utils.AI.imageAI import ImageAI
+from .utils.AI.prompt.text_prompt import GENERATE_BLOG_FROM_BLOG
+from .utils.AI.syntax.blog_syntax import HUGO
+from .utils.converter.blog_converter import BlogConverter
+from .utils.converter.image_converter import ImageConverter
 from datetime import date
 import os
 import json
@@ -89,7 +88,7 @@ class BlogGenerator:
             if infrence_params is None:
                 infrence_params = {
                     "quality": "standard",
-                    "size": "512x512",
+                    "size": "1024x1024",
                 }
             for i, prompt in enumerate(prompts):
                 image_ai = ImageAI()
@@ -207,8 +206,7 @@ class BlogGenerator:
             )
             # lowercase
             blog_dir = blog_dir.lower()
-
-            os.path.join(base_dir, blog_dir)
+            blog_dir = os.path.join(base_dir, blog_dir)
             os.makedirs(blog_dir, exist_ok=True)
             blog_dir = os.path.abspath(blog_dir)
 
@@ -224,9 +222,13 @@ class BlogGenerator:
             # generate images
             if generate_images:
                 prompts = blog_generator.get_prompts(generated_blog)
+                image_path = os.path.join(
+                    blog_dir, "img", "posts", blog_dir.split("/")[-1]
+                )
+                os.makedirs(image_path, exist_ok=True)
                 success = blog_generator.generate_images(
                     prompts,
-                    image_path=blog_dir,
+                    image_path=image_path,
                     infrence_params=infrence_params,
                 )
                 if not success:
@@ -240,7 +242,7 @@ class BlogGenerator:
             if markdown_content is None:
                 return None
 
-            return generated_blog
+            return blog_dir
         except Exception as e:
             # Handle the exception here
             print(f"Error generating blog: {e}")

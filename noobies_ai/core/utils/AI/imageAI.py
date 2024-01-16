@@ -1,6 +1,11 @@
 from clarifai.client.model import Model
 
+# USER_ID = "stability-ai"
 
+# APP_ID = "stable-diffusion-2"
+
+
+# Change these to whatever model
 class ImageAI:
     def __init__(
         self,
@@ -47,6 +52,7 @@ class ImageAI:
         """
         try:
             # Model Predict
+            inference_params["bacth_size"] = 1
             model_prediction = self.llm.predict_by_bytes(
                 prompt.encode(), input_type="text", inference_params=inference_params
             )
