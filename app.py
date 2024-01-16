@@ -20,7 +20,11 @@ ClarifaiStreamlitCSS.insert_default_css(st)
 def main():
     # show logo image in center
 
-    st.image("./static/images/logo.png")
+    _, img_col, _ = st.columns([1, 3, 1])
+    img_col.image("./static/images/neon_logo.png")
+    with st.sidebar:
+        _, img_col, _ = st.columns([1, 3, 1])
+        img_col.image("./static/images/neon_logo.png")
     col1, col2 = st.columns(2)
     col3, col4 = st.columns(2)
 
@@ -38,7 +42,9 @@ def main():
             url="/blog_to_blog",
             key="blog_card",
             styles={
-                "card": {},
+                "card": {
+                    "width": "100%",
+                },
                 "title": {
                     "text-shadow": "0px 0px 1px #111111",
                     "color": "white",
@@ -58,7 +64,9 @@ def main():
             url="./pages/blog_to_video.py",
             key="video_card",
             styles={
-                "card": {},
+                "card": {
+                    "width": "100%",
+                },
                 "filter": {
                     "background-color": "rgba(0, 0, 0, 0.65)"  # <- make the image not dimmed anymore
                 },
@@ -73,7 +81,9 @@ def main():
             url="./pages/blog_to_blog.py",
             key="image_card",
             styles={
-                "card": {},
+                "card": {
+                    "width": "100%",
+                },
                 "filter": {
                     "background-color": "rgba(0, 0, 0, 0.65)"  # <- make the image not dimmed anymore
                 },
@@ -88,7 +98,9 @@ def main():
             url="./pages/blog_to_video.py",
             key="audio_card",
             styles={
-                "card": {},
+                "card": {
+                    "width": "100%",
+                },
                 "filter": {
                     "background-color": "rgba(0, 0, 0, 0.65)"  # <- make the image not dimmed anymore
                 },

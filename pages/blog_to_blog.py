@@ -112,18 +112,19 @@ def generate_blog(blog_url, generate_ai_images):
         if generate_ai_images:
             st.markdown("## Generated Images")
             for i in range(0, 6, 2):
-                image_path1 = os.path.join(
-                    blog_dir, "img", "posts", blog_dir.split("/")[-1], f"{i}.png"
-                )
-                image_path2 = os.path.join(
-                    blog_dir, "img", "posts", blog_dir.split("/")[-1], f"{i+1}.png"
-                )
                 col1, col2 = st.columns(2)
+
                 try:
+                    image_path1 = os.path.join(
+                        blog_dir, "img", "posts", blog_dir.split("/")[-1], f"{i}.png"
+                    )
                     col1.image(image_path1)
                 except FileNotFoundError:
                     continue
                 try:
+                    image_path2 = os.path.join(
+                        blog_dir, "img", "posts", blog_dir.split("/")[-1], f"{i+1}.png"
+                    )
                     col2.image(image_path2)
                 except FileNotFoundError:
                     continue
@@ -140,21 +141,28 @@ def main():
     Main function to run the application.
     """
     try:
-        st.title("Blog to Blog")
-        st.markdown("Enter a blog URL and we'll generate a new blog for you!")
+        _, img_col, _ = st.columns([1, 3, 1])
+        img_col.image("./static/images/neon_logo.png")
+        st.title("📝 Blog to Blog")
+        st.markdown("Enter a blog URL and we'll generate a new blog for you! 🚀")
+        st.markdown("- Generating a blog with images takes 2-5 minutes. ⏳")
+        st.markdown("- Generating a blog without images takes 30 seconds. ⏳")
 
         with st.form(key="blog_to_blog"):
             blog_url = st.text_input(
-                "Blog URL",
+                "🔗 Blog URL",
             )
-            generate_ai_images = st.checkbox("Generate AI Images", value=True)
-            submit_button = st.form_submit_button(label="GENERATE")
+            generate_ai_images = st.checkbox("🖼️ Generate AI Images", value=True)
+            submit_button = st.form_submit_button(label="GENERATE 🚀")
         if submit_button:
             with st.spinner("Generating your blog..."):
+                # image = st.image("./static/images/loading.gif")
                 generate_blog(blog_url, generate_ai_images)
-                st.success("Blog generated!")
+                st.success("✅ Blog generated!")
+                # remove the loading gif
+                # image.empty()
     except Exception as e:
-        st.error(f"An error occurred: {e}")
+        st.error(f"❌ An error occurred: {e}")
 
 
 if __name__ == "__main__":

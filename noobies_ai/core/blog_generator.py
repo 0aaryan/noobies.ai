@@ -101,7 +101,11 @@ class BlogGenerator:
                     output_file=path,
                 )
 
-                image_converter.resize([path])
+                try:
+                    image_converter.resize([path])
+                except Exception as e:
+                    print(f"Error resizing image: {e}")
+                    continue
 
             return True
         except Exception as e:
