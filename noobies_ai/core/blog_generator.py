@@ -252,7 +252,7 @@ if __name__ == "__main__":
 
     load_dotenv()
 
-    url = "https://economictimes.indiatimes.com/tech/technology/elon-musks-x-lays-out-future-plans-peer-to-peer-payments-ai-and-content-creators-in-focus/articleshow/106685897.cms"
+    url = "https://economictimes.indiatimes.com/tech/newsletters/tech-top-5/invesco-raises-swiggys-valuation-by-9-fmcg-items-a-hit-on-ecommerce-platforms/articleshow/106548171.cms"
 
     base_dir = "./blogs"
     base_dir = os.path.abspath(base_dir)
