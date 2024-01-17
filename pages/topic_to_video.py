@@ -30,14 +30,8 @@ def generate_video():
     pass
 
 
-class tmp:
-    name = "./video"
-
-
 def generate_script():
-    # temp_dir = {"name": "./video"}
-    # use struct
-    temp_dir = tmp()
+    temp_dir = tempfile.TemporaryDirectory()
 
     try:
         video_generator = VideoGenerator()
@@ -146,51 +140,44 @@ def generate_script():
                         print(e)
                         st.error("Error generating audio")
 
-                    if st.session_state.audio_path is not None:
-                        st.audio(st.session_state.audio_path)
+                if st.session_state.audio_path is not None:
+                    st.audio(st.session_state.audio_path)
 
-                    with st.spinner("Generating images for your video"):
+                with st.spinner("Generating images for your video"):
+                    try:
+                        image_path = os.path.join(temp_dir.name, "images")
+                        # mk folder if not exists
+                        os.makedirs(image_path, exist_ok=True)
+                        image_paths = video_generator.generate_images(
+                            image_prompts=updated_image_prompts,
+                            image_path=image_path,
+                        )
+                        st.session_state.image_paths = image_paths
+                    except Exception as e:
+                        print(e)
+                        st.error("Error generating images")
+
+                if st.session_state.image_paths is not None:
+                    num_of_images = len(st.session_state.image_paths)
+                    cols = st.columns(num_of_images)
+                    for i, col in enumerate(cols):
+                        col.image(st.session_state.image_paths[i])
+
+                    with st.spinner("Generating video"):
                         try:
-                            image_path = os.path.join(temp_dir.name, "images")
-                            # mk folder if not exists
-                            os.makedirs(image_path, exist_ok=True)
-                            image_paths = video_generator.generate_images(
-                                image_prompts=updated_image_prompts,
-                                image_path=image_path,
+                            output_file = "video.mp4"
+                            video_path = video_generator.generate_video(
+                                video_dir=temp_dir.name,
+                                output_file=output_file,
                             )
-                            st.session_state.image_paths = image_paths
+                            st.session_state.video_path = video_path
                         except Exception as e:
                             print(e)
-                            st.error("Error generating images")
+                            st.error("Error generating video")
 
-                        if st.session_state.image_paths is not None:
-                            col1, col2 = st.columns(2)
-                            turn = 0
-                            for path in st.session_state.image_paths:
-                                if turn == 0:
-                                    with col1:
-                                        st.image(path)
-                                        turn = 1
-                                else:
-                                    with col2:
-                                        st.image(path)
-                                        turn = 0
-
-                            with st.spinner("Generating video"):
-                                try:
-                                    video_path = "video.mp4"
-                                    video_generator.generate_video(
-                                        video_dir=temp_dir.name,
-                                        output_file=video_path,
-                                    )
-                                    st.session_state.video_path = video_path
-                                except Exception as e:
-                                    print(e)
-                                    st.error("Error generating video")
-
-                            if st.session_state.video_path is not None:
-                                st.video(st.session_state.video_path)
-                                st.video("/Data/aryanCodes3/noobies.ai/video/video.mp4")
+                    if st.session_state.video_path is not None:
+                        st.video(st.session_state.video_path)
+                        st.video("/Data/aryanCodes3/noobies.ai/video/video.mp4")
 
     except Exception as e:
         st.error(f"Error: {e}")

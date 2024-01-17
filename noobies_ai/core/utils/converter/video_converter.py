@@ -9,7 +9,7 @@ class VideoConverter:
 
     def zoom_in_out(self, t):
         """Defines a zoom in and out function based on a sin wave"""
-        return 1.3 + 0.3 * np.sin(t / 3)
+        return 1.7 + 0.3 * np.sin(t / 3)
 
     def create_video(self, folder_path, output_file="video.mp4"):
         """Creates a video from a folder of images and an audio file"""
@@ -42,10 +42,12 @@ class VideoConverter:
         image_duration = audio_duration / len(image_files)
 
         clips = []
-        height = 1024
-        width = 1024 * 9 / 16
-        if width % 2 != 0:
-            width += 1
+        height = 1280
+        width = 720
+        # if width % 2 != 0:
+        #     width = width - 1
+        # width = int(width)
+        print(width, height)
         for i in range(len(image_files)):
             print("processing image", i)
             clip = ImageClip(image_files[i]).set_duration(image_duration)
@@ -56,10 +58,17 @@ class VideoConverter:
         print("concatenating")
         video_clip = concatenate_videoclips(clips, method="compose")
         video_clip = video_clip.set_audio(audio)
+        # final_video.write_videofile(output_file, fps=30, threads=8, audio=True, codec='libx264')
         print("writing")
         video_clip.write_videofile(
-            os.path.join(self.folder_path, output_file), fps=24, threads=4, logger=None
+            os.path.join(self.folder_path, output_file),
+            fps=24,
+            threads=8,
+            audio=True,
+            codec="libx264",
+            audio_codec="aac",
         )
+
         return os.path.join(self.folder_path, output_file)
 
 
