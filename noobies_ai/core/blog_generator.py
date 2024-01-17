@@ -33,6 +33,7 @@ class BlogGenerator:
         url,
         summary=False,
         instructions="",
+        is_topic=False,
     ):
         """
         Generate text for the blog.
@@ -46,21 +47,34 @@ class BlogGenerator:
             str: The generated blog text.
         """
         try:
-            blog_downloader = BlogDownloader()
-            blog, error = blog_downloader.download_text(url)
-            blog = blog_downloader.clean_text(blog)
+            if not is_topic:
+                blog_downloader = BlogDownloader()
+                blog, error = blog_downloader.download_text(url)
+                blog = blog_downloader.clean_text(blog)
+            else:
+                blog = url
             if self.model_id is None:
                 text_ai = TextAI()
             else:
                 text_ai = TextAI(model_id=self.model_id)
-            generated_blog = text_ai.predict(
+            blog_text = text_ai.predict(
                 prompt_template=self.prompt,
                 topic=blog,
                 instructions=instructions,
                 syntax=self.syntax,
                 date=date.today().strftime("%B %d, %Y"),
             )
-            return generated_blog
+
+            try:
+                blog_text = blog_text.replace("```json", "")
+                blog_text = blog_text.replace("```", "")
+            except Exception as e:
+                raise Exception(
+                    "Error occurred while removing json code block: " + str(e)
+                )
+
+            return json.loads(blog_text)
+
         except Exception as e:
             # Handle the exception here
             print(f"Error generating text: {e}")
@@ -166,6 +180,7 @@ class BlogGenerator:
         infrence_params=None,
         debug=False,
         base_dir="./",
+        is_topic=False,
     ):
         """
         Generate the complete blog.
@@ -190,6 +205,8 @@ class BlogGenerator:
                 print(f"Instructions: {instructions}")
                 print(f"Generate Images: {generate_images}")
                 print(f"Infrence Params: {infrence_params}")
+                print(f"Base Dir: {base_dir}")
+                print(f"Is Topic: {is_topic}")
                 print(f"Debug: {debug}")
 
             blog_generator = BlogGenerator()
@@ -197,6 +214,7 @@ class BlogGenerator:
                 url,
                 summary=summary,
                 instructions=instructions,
+                is_topic=is_topic,
             )
             if generated_blog is None:
                 return None

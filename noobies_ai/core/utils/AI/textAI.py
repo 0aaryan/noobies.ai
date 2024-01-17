@@ -53,6 +53,8 @@ class TextAI:
         for variable in input_variables:
             inputs[variable] = kwargs[variable]
 
+        print("Generating prediction")
+        print("Prompt: " + prompt.template)
         try:
             params = dict(max_tokens=1024)
             chain = LLMChain(
@@ -63,16 +65,10 @@ class TextAI:
             )
             blog_text = chain.invoke(inputs)
             blog_text = StrOutputParser().parse(text=blog_text["text"])
+            return blog_text
         except Exception as e:
+            print(e)
             raise Exception("Error occurred during prediction: " + str(e))
-
-        try:
-            blog_text = blog_text.replace("```json", "")
-            blog_text = blog_text.replace("```", "")
-        except Exception as e:
-            raise Exception("Error occurred while removing json code block: " + str(e))
-
-        return json.loads(blog_text)
 
 
 if __name__ == "__main__":

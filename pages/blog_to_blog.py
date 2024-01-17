@@ -77,7 +77,7 @@ def convert_to_dict(blog_metadata):
         st.error(f"Error converting blog metadata to dictionary: {e}")
 
 
-def generate_blog(blog_url, generate_ai_images):
+def generate_blog(blog_url, generate_ai_images, is_topic=False):
     """
     Generate a new blog based on the given URL.
     """
@@ -91,6 +91,7 @@ def generate_blog(blog_url, generate_ai_images):
             base_dir=temp_dir_abs,
             debug=True,
             generate_images=generate_ai_images,
+            is_topic=is_topic,
         )
 
         st.markdown("## Generated Blog")

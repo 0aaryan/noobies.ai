@@ -2,3 +2,4 @@ clarifai
 streamlit
 langchain
 streamlit-card
+moviepy

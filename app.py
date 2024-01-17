@@ -61,7 +61,7 @@ def main():
             title="TOPIC TO BLOG",
             text="",
             image=blog_image_2,
-            url="./pages/blog_to_video.py",
+            url="/topic_to_blog",
             key="video_card",
             styles={
                 "card": {
@@ -78,7 +78,7 @@ def main():
             title=" TOPIC TO VIDEO",
             text="",
             image=video_image_1,
-            url="./pages/blog_to_blog.py",
+            url="/topic_to_video",
             key="image_card",
             styles={
                 "card": {
