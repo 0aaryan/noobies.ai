@@ -3,3 +3,7 @@ streamlit
 langchain
 streamlit-card
 moviepy
+numpy
+pandas
+matplotlib
+pillow
