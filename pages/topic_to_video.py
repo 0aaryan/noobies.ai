@@ -27,10 +27,6 @@ def init():
 
 
 def generate_video():
-    pass
-
-
-def generate_script():
     temp_dir = tempfile.TemporaryDirectory()
 
     try:
@@ -39,28 +35,28 @@ def generate_script():
             col1, col2 = st.columns(2)
             with col1:
                 topic = st.text_input(
-                    "Enter Topic",
+                    "Enter Topic 📝",
                     placeholder="3 scary places in the world",
                 )
                 duration = st.number_input(
-                    "Enter Duration (seconds)", min_value=1, max_value=120, value=30
+                    "Enter Duration (seconds) ⏳", min_value=1, max_value=120, value=30
                 )
                 duration = str(duration) + "s"
-                tone = st.text_input("Enter Tone", placeholder="scary")
+                tone = st.text_input("Enter Tone 🎵", placeholder="scary")
 
             with col2:
                 instructions = st.text_input(
-                    "Enter Instructions", placeholder="Add my name in the script"
+                    "Enter Instructions ✍️", placeholder="Add my name in the script"
                 )
                 language = st.selectbox(
-                    "Select Language", video_generator.get_languages()
+                    "Select Language 🌐", video_generator.get_languages()
                 )
                 num_of_images = st.number_input(
-                    value=5, min_value=1, max_value=10, label="Number of Images"
+                    value=5, min_value=1, max_value=10, label="Number of Images 🖼️"
                 )
             _, center, _ = st.columns([2, 3, 1])
             with center:
-                submit_button = st.form_submit_button(label="Generate Script")
+                submit_button = st.form_submit_button(label="Generate Script 🚀")
 
             if submit_button:
                 with st.spinner("Generating Script"):
@@ -86,31 +82,33 @@ def generate_script():
             image_prompts = st.session_state.video_script["image_prompts"]
 
             with col1:
-                st.text_input("Title", value=title)
-                st.text_area("Description", value=description)
+                st.text_input("Title 📌", value=title)
+                st.text_area("Description 📝", value=description)
 
             with col2:
-                with st.expander("Script "):
+                with st.expander("Script 📜"):
                     for i, part in enumerate(script_parts):
-                        st.text_input(f"Part {i+1}", value=part, key=f"part{i+1}")
+                        st.text_input(f"Part {i+1} ✏️", value=part, key=f"part{i+1}")
 
-                with st.expander("Image Prompts"):
+                with st.expander("Image Prompts 🖼️"):
                     for i, prompt in enumerate(image_prompts):
-                        st.text_input(f"Prompt {i+1}", value=prompt, key=f"prompt{i+1}")
+                        st.text_input(
+                            f"Prompt {i+1} ✏️", value=prompt, key=f"prompt{i+1}"
+                        )
 
             with col2:
                 show_video_options = st.checkbox("Show Video Options ⚙️")
                 if show_video_options:
-                    with st.expander(" 🎵 audio options"):
+                    with st.expander("Audio Options 🎵"):
                         voice_option = st.selectbox(
                             options=video_generator.get_voice_ids().keys(),
-                            label="Voice",
+                            label="Voice 🔊",
                         )
                         st.session_state.voice_option = voice_option
-                    with st.expander(" 📝 subtitle options"):
-                        font_color = st.color_picker("Font Color", value="#ffffff")
+                    with st.expander("Subtitle Options 📝"):
+                        font_color = st.color_picker("Font Color 🎨", value="#ffffff")
 
-                submit_button = st.button("Generate Video")
+                submit_button = st.button("Generate Video 🎥")
 
             if submit_button:
                 with st.spinner("Generating voice for your video"):
@@ -129,9 +127,13 @@ def generate_script():
                             )
 
                         print(updated_script_parts, updated_image_prompts)
+                        if st.session_state.voice_option is None:
+                            st.session_state.voice_option = (
+                                video_generator.get_voice_ids().keys()[0]
+                            )
                         video_generator.generate_audio(
                             output_file=audio_path,
-                            voice_id=voice_option,
+                            voice_id=st.session_state.voice_option,
                             script_parts=updated_script_parts,
                         )
                         st.session_state.audio_path = audio_path
@@ -176,8 +178,8 @@ def generate_script():
                             st.error("Error generating video")
 
                     if st.session_state.video_path is not None:
-                        st.video(st.session_state.video_path)
-                        st.video("/Data/aryanCodes3/noobies.ai/video/video.mp4")
+                        _, center, _ = st.columns([1, 1, 1])
+                        center.video(st.session_state.video_path)
 
     except Exception as e:
         st.error(f"Error: {e}")
@@ -198,8 +200,7 @@ def main():
             " 📽️ topic to video",
             help="- first generate a script and then generate a video from that script\n- you can also re generate the script if you don't like it\n- you can also change the video options",
         )
-
-        generate_script()
+        generate_video()
 
     except Exception as e:
         st.error(f"❌ An error occurred: {e}")
