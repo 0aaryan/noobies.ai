@@ -191,7 +191,9 @@ class VideoGenerator:
 
     def generate_subtiles(self, audio_path, word_timestamps=True):
         audio_ai = AudioAI()
-        return audio_ai.get_transcription(audio_path, word_timestamps)
+        subs = audio_ai.get_transcription(audio_path, word_timestamps)
+        print(subs)
+        return subs
 
     def generate_video(
         self,
