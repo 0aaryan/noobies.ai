@@ -11,6 +11,21 @@ from noobies_ai.core.video_generator import VideoGenerator
 st.set_page_config(page_title="Topic to Video", page_icon=" 📽️ ", layout="centered")
 
 
+def get_clarifai_pat():
+    """
+    Get the Clarifai PAT from the user.
+    """
+    with st.sidebar:
+        st.subheader("Add your Clarifai PAT")
+        CLARIFAI_PAT = st.text_input("Clarifai PAT", type="password")
+        # add button and export to env
+        if st.button("Add PAT"):
+            os.environ["CLARIFAI_PAT"] = CLARIFAI_PAT
+            st.success("✅ PAT added!")
+            st.balloons()
+        return CLARIFAI_PAT
+
+
 def init():
     session_variables = [
         "video_script",
@@ -223,4 +238,5 @@ def main():
 
 if __name__ == "__main__":
     init()
+    get_clarifai_pat()
     main()

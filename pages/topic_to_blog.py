@@ -6,6 +6,22 @@ from noobies_ai.core.blog_generator import BlogGenerator
 import re
 import pandas as pd
 
+
+def get_clarifai_pat():
+    """
+    Get the Clarifai PAT from the user.
+    """
+    with st.sidebar:
+        st.subheader("Add your Clarifai PAT")
+        CLARIFAI_PAT = st.text_input("Clarifai PAT", type="password")
+        # add button and export to env
+        if st.button("Add PAT"):
+            os.environ["CLARIFAI_PAT"] = CLARIFAI_PAT
+            st.success("✅ PAT added!")
+            st.balloons()
+        return CLARIFAI_PAT
+
+
 # allow unsafe html
 
 # page icon should be website icon
@@ -17,18 +33,6 @@ st.set_page_config(page_title="Topic to Blog", page_icon=" 📝 ", layout="cente
 # initalize session state
 if "blog_generated" not in st.session_state:
     st.session_state.blog_generated = False
-
-
-def get_clarifai_pat():
-    """
-    Get the Clarifai PAT from the user.
-    """
-    with st.sidebar:
-        st.subheader("Add your Clarifai PAT")
-
-        # Get the USER_ID, APP_ID, Clarifai API Key
-        CLARIFAI_PAT = st.text_input("Clarifai PAT", type="password")
-        return CLARIFAI_PAT
 
 
 import base64
@@ -167,4 +171,5 @@ def main():
 
 
 if __name__ == "__main__":
+    get_clarifai_pat()
     main()

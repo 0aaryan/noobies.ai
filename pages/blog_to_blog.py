@@ -6,6 +6,7 @@ from noobies_ai.core.blog_generator import BlogGenerator
 import re
 import pandas as pd
 
+
 # allow unsafe html
 
 # page icon should be website icon
@@ -25,9 +26,12 @@ def get_clarifai_pat():
     """
     with st.sidebar:
         st.subheader("Add your Clarifai PAT")
-
-        # Get the USER_ID, APP_ID, Clarifai API Key
         CLARIFAI_PAT = st.text_input("Clarifai PAT", type="password")
+        # add button and export to env
+        if st.button("Add PAT"):
+            os.environ["CLARIFAI_PAT"] = CLARIFAI_PAT
+            st.success("✅ PAT added!")
+            st.balloons()
         return CLARIFAI_PAT
 
 
@@ -167,4 +171,5 @@ def main():
 
 
 if __name__ == "__main__":
+    get_clarifai_pat()
     main()

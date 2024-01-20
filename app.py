@@ -2,6 +2,22 @@ import streamlit as st
 from clarifai.modules.css import ClarifaiStreamlitCSS
 import base64
 from streamlit_card import card
+import os
+
+
+def get_clarifai_pat():
+    """
+    Get the Clarifai PAT from the user.
+    """
+    with st.sidebar:
+        st.subheader("Add your Clarifai PAT")
+        CLARIFAI_PAT = st.text_input("Clarifai PAT", type="password")
+        # add button and export to env
+        if st.button("Add PAT"):
+            os.environ["CLARIFAI_PAT"] = CLARIFAI_PAT
+            st.success("✅ PAT added!")
+            st.balloons()
+        return CLARIFAI_PAT
 
 
 def get_image_data(img_path):
@@ -14,7 +30,6 @@ def get_image_data(img_path):
 
 # page icon should be image camera
 st.set_page_config(page_title="noobies.ai", page_icon="📷", layout="centered")
-ClarifaiStreamlitCSS.insert_default_css(st)
 
 
 def main():
@@ -109,4 +124,5 @@ def main():
 
 
 if __name__ == "__main__":
+    get_clarifai_pat()
     main()
