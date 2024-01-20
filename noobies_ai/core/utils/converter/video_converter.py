@@ -36,7 +36,6 @@ class VideoConverter:
                 word_text,
                 fontsize=font_size,
                 color=font_color,
-                font=font,
                 method="caption",
             )
             clip = clip.set_start(word_start).set_end(word_end)
