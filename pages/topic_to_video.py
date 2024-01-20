@@ -26,9 +26,12 @@ def init():
             st.session_state[variable] = None
 
 
-def generate_video():
-    temp_dir = tempfile.TemporaryDirectory()
+class mytmpdir:
+    def __init__(self):
+        self.name = "./video"
 
+
+def generate_video():
     try:
         video_generator = VideoGenerator()
         with st.form(key="generate_video_form"):
@@ -97,20 +100,26 @@ def generate_video():
                         )
 
             with col2:
-                show_video_options = st.checkbox("Show Video Options ⚙️")
-                if show_video_options:
-                    with st.expander("Audio Options 🎵"):
-                        voice_option = st.selectbox(
-                            options=video_generator.get_voice_ids().keys(),
-                            label="Voice 🔊",
-                        )
-                        st.session_state.voice_option = voice_option
-                    with st.expander("Subtitle Options 📝"):
-                        font_color = st.color_picker("Font Color 🎨", value="#ffffff")
+                with st.expander("Audio Options 🎵"):
+                    voice_option = st.selectbox(
+                        options=video_generator.get_voice_ids().keys(),
+                        label="Voice 🔊",
+                    )
+                    st.session_state.voice_option = video_generator.get_voice_ids()[
+                        voice_option
+                    ]
+                with st.expander("Subtitle Options 📝"):
+                    font_color = st.color_picker("Font Color 🎨", value="#ffff00")
+                    font_size = st.slider(
+                        "Font Size 🔍", min_value=1, max_value=120, value=70, step=10
+                    )
 
                 submit_button = st.button("Generate Video 🎥")
 
             if submit_button:
+                # temp_dir = tempfile.TemporaryDirectory()
+                temp_dir = mytmpdir()
+
                 with st.spinner("Generating voice for your video"):
                     try:
                         audio_path = os.path.join(temp_dir.name, "voice.mp3")
@@ -127,10 +136,6 @@ def generate_video():
                             )
 
                         print(updated_script_parts, updated_image_prompts)
-                        if st.session_state.voice_option is None:
-                            st.session_state.voice_option = (
-                                video_generator.get_voice_ids().keys()[0]
-                            )
                         video_generator.generate_audio(
                             output_file=audio_path,
                             voice_id=st.session_state.voice_option,
@@ -143,7 +148,7 @@ def generate_video():
                         st.error("Error generating audio")
 
                 if st.session_state.audio_path is not None:
-                    st.audio(st.session_state.audio_path)
+                    st.audio(st.session_state.audio_path, format="audio/mp3")
 
                 with st.spinner("Generating images for your video"):
                     try:
@@ -171,6 +176,10 @@ def generate_video():
                             video_path = video_generator.generate_video(
                                 video_dir=temp_dir.name,
                                 output_file=output_file,
+                                subtitle_options={
+                                    "font_color": font_color,
+                                    "font_size": font_size,
+                                },
                             )
                             st.session_state.video_path = video_path
                         except Exception as e:

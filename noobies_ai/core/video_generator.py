@@ -47,6 +47,16 @@ class VideoGenerator:
         audio_ai = AudioAI()
         return audio_ai.get_voice_ids()
 
+    def get_font_list(self):
+        """
+        Returns the available fonts.
+
+        Returns:
+            list: List of available fonts.
+        """
+        video_converter = VideoConverter()
+        return video_converter.get_font_list()
+
     def generate_script(
         self,
         topic,
@@ -142,12 +152,8 @@ class VideoGenerator:
         if voice_id is None:
             voice_id = list(audio_ai.get_voice_ids().values())[0]
         audio_options = {
-            "voice-id": voice_id,
-            "model_id": "eleven_multilingual_v2",
-            "stability": 0.5,
-            "similarity_boost": 0.5,
-            "style": 0,
-            "use_speaker_boost": True,
+            "voice": voice_id,
+            "speed": "1.0",
             "language": language,
         }
         audio_ai.generate(
@@ -183,10 +189,19 @@ class VideoGenerator:
             print(e)
             return None
 
+    def generate_subtiles(self, audio_path, word_timestamps=True):
+        audio_ai = AudioAI()
+        return audio_ai.get_transcription(audio_path, word_timestamps)
+
     def generate_video(
         self,
         video_dir,
         output_file="video.mp4",
+        subtitle_options={
+            "font_color": "yellow",
+            "font_size": 60,
+            "font": "liberation-sans",
+        },
     ):
         """
         Generates the video.
@@ -196,7 +211,12 @@ class VideoGenerator:
         """
         try:
             video_converter = VideoConverter()
-            video_path = video_converter.create_video(video_dir, output_file)
+            audio_path = os.path.join(video_dir, "voice.mp3")
+            subtitles = self.generate_subtiles(audio_path)
+            video_path = video_converter.create_video(
+                video_dir, subtitles, subtitle_options=subtitle_options
+            )
+
             return video_path
         except Exception as e:
             print(e)

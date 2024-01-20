@@ -80,6 +80,16 @@ class AudioAI:
     def get_voice_ids(self):
         return self.voice_ids
 
+    def get_transcription(self, audio_path, word_timestamps=True):
+        import whisper
+
+        model = whisper.load_model("base.en")
+        result = model.transcribe(audio_path, word_timestamps=word_timestamps)
+        words = []
+        for res in result["segments"]:
+            words.extend(res["words"])
+        return words
+
 
 if __name__ == "__main__":
     from dotenv import load_dotenv
@@ -87,6 +97,10 @@ if __name__ == "__main__":
     load_dotenv()
     audio_ai = AudioAI()
     audio_ai.generate(
-        prompt="मेरा नाम आर्यन है",
+        prompt="weather is very good today. let's go to the beach",
         output_file="audio.wav",
     )
+
+    transcript = audio_ai.get_transcription("/Data/aryanCodes3/noobies.ai/voice.mp3")
+    for word in transcript:
+        print(word["word"], word["start"], word["end"])

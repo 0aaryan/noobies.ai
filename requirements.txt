@@ -2,8 +2,12 @@ clarifai
 streamlit
 langchain
 streamlit-card
-moviepy
+moviepy==2.0.0.dev2
+imageio==2.25.1
 numpy
 pandas
 matplotlib
 pillow
+pydub
+scipy
+openai-whisper
