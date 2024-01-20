@@ -2,5 +2,5 @@
 base="dark"
 primaryColor="#E1819A"
 
-[ui]
-hideSidebarNav=false
+[client]
+showSidebarNavigation=true
