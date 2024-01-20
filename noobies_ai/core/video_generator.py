@@ -154,10 +154,15 @@ class VideoGenerator:
         if voice_id is None:
             voice_id = list(audio_ai.get_voice_ids().values())[0]
         audio_options = {
-            "voice": voice_id,
-            "speed": "1.0",
+            "voice-id": voice_id,
+            "model_id": "eleven_multilingual_v2",
+            "stability": 0.5,
+            "similarity_boost": 0.5,
+            "style": 0,
+            "use_speaker_boost": True,
             "language": language,
         }
+
         audio_ai.generate(
             prompt=script,
             inference_params=audio_options,
@@ -216,7 +221,8 @@ class VideoGenerator:
         try:
             video_converter = VideoConverter()
             audio_path = os.path.join(video_dir, "voice.mp3")
-            subtitles = self.generate_subtiles(audio_path)
+            # subtitles = self.generate_subtiles(audio_path)
+            subtitles = None
             video_path = video_converter.create_video(
                 video_dir, subtitles, subtitle_options=subtitle_options
             )

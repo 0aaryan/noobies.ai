@@ -103,14 +103,19 @@ def generate_video():
                     st.session_state.voice_option = video_generator.get_voice_ids()[
                         voice_option
                     ]
-                with st.expander("Subtitle Options 📝"):
-                    font_color = st.color_picker("Font Color 🎨", value="#ffff00")
-                    font_list = video_generator.get_font_list()
-                    font = st.selectbox("Font 📝", font_list)
-                    font_size = st.slider(
-                        "Font Size 🔍", min_value=1, max_value=120, value=70, step=10
-                    )
+                st.info("subtitle options are not available yet")
+                # font_color = st.color_picker("Font Color 🎨", value="#ffff00")
+                # font_list = video_generator.get_font_list()
+                # font = st.selectbox("Font 📝", font_list)
+                # font_size = st.slider(
+                #     "Font Size 🔍", min_value=1, max_value=120, value=70, step=10
+                # )
+                font_color = "#ffff00"
+                font = None
+                font_size = 70
 
+            _, center, _ = st.columns([3, 2, 3])
+            with center:
                 submit_button = st.button("Generate Video 🎥")
 
             if submit_button:
@@ -118,6 +123,7 @@ def generate_video():
                 temp_dir = tempfile.TemporaryDirectory()
 
                 with st.spinner("Generating voice for your video"):
+                    st.info("Generating audio takes 30-60 seconds")
                     try:
                         audio_path = os.path.join(temp_dir.name, "voice.mp3")
                         voice_option = video_generator.get_voice_ids()[voice_option]
@@ -148,6 +154,7 @@ def generate_video():
                     st.audio(st.session_state.audio_path, format="audio/mp3")
 
                 with st.spinner("Generating images for your video"):
+                    st.info("Generating one image takes 20-30 seconds")
                     try:
                         image_path = os.path.join(temp_dir.name, "images")
                         # mk folder if not exists
@@ -169,6 +176,7 @@ def generate_video():
 
                     with st.spinner("Generating video"):
                         try:
+                            st.info("Generating video takes 60 seconds")
                             output_file = "video.mp4"
                             video_path = video_generator.generate_video(
                                 video_dir=temp_dir.name,

@@ -114,10 +114,10 @@ class VideoConverter:
         video_clip = video_clip.set_audio(audio)
         # final_video.write_videofile(output_file, fps=30, threads=8, audio=True, codec='libx264')
 
-        print("adding subtitles")
-        text_clips = self.create_text_clips(subtitles, subtitle_options)
-        print("adding text clips")
-        video_clip = CompositeVideoClip([video_clip] + text_clips)
+        # print("adding subtitles")
+        # text_clips = self.create_text_clips(subtitles, subtitle_options)
+        # print("adding text clips")
+        # video_clip = CompositeVideoClip([video_clip] + text_clips)
         print(video_clip.duration)
         print("writing")
         video_clip.write_videofile(
