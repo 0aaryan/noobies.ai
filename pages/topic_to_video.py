@@ -26,11 +26,6 @@ def init():
             st.session_state[variable] = None
 
 
-class mytmpdir:
-    def __init__(self):
-        self.name = "./video"
-
-
 def generate_video():
     try:
         video_generator = VideoGenerator()
@@ -118,7 +113,7 @@ def generate_video():
 
             if submit_button:
                 # temp_dir = tempfile.TemporaryDirectory()
-                temp_dir = mytmpdir()
+                temp_dir = tempfile.TemporaryDirectory()
 
                 with st.spinner("Generating voice for your video"):
                     try:
