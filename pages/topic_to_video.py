@@ -105,6 +105,8 @@ def generate_video():
                     ]
                 with st.expander("Subtitle Options 📝"):
                     font_color = st.color_picker("Font Color 🎨", value="#ffff00")
+                    font_list = video_generator.get_font_list()
+                    font = st.selectbox("Font 📝", font_list)
                     font_size = st.slider(
                         "Font Size 🔍", min_value=1, max_value=120, value=70, step=10
                     )
@@ -174,6 +176,7 @@ def generate_video():
                                 subtitle_options={
                                     "font_color": font_color,
                                     "font_size": font_size,
+                                    "font": font,
                                 },
                             )
                             st.session_state.video_path = video_path
