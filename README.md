@@ -171,8 +171,6 @@ from noobies_ai.core import blog_generator
 generated_blog = blog_generator.generate_blog(topic="AI in 2024")
 ```
 
-[... Include similar example snippets for other features ...]
-
 ## Dependencies
 
 Ensure you have the required dependencies installed by running:
@@ -180,10 +178,6 @@ Ensure you have the required dependencies installed by running:
 ```bash
 pip install -r requirements.txt
 ```
-
-## Badges
-
-[... Include badges section as provided in the previous response ...]
 
 ## Contributing
 
