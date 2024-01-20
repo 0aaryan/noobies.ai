@@ -1,7 +1,5 @@
 ## ![logo](./static/images/neon_logo.png)
 
-# noobies.ai
-
 [![content](https://clarifai.com/api/0aaryan/noobies/modules/content/badge)](https://clarifai.com/0aaryan/noobies/modules/content)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 
