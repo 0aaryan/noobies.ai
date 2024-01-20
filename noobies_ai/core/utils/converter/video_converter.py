@@ -17,6 +17,16 @@ class VideoConverter:
         return font_list
 
     def create_text_clips(self, subtitles, subtitle_options):
+        # cat /etc/ImageMagick-6/policy.xml | sed 's/none/read,write/g'> /etc/ImageMagick-6/policy.xml
+        # we need to execute this command
+        # we will use subprocess module to execute this command
+        import subprocess
+
+        subprocess.call(
+            "cat /etc/ImageMagick-6/policy.xml | sed 's/none/read,write/g'> /etc/ImageMagick-6/policy.xml",
+            shell=True,
+        )
+
         """Creates a list of text clips from a list of subtitles"""
         font_size = subtitle_options.get("font_size", 40)
         font_color = subtitle_options.get("font_color", "yellow")
