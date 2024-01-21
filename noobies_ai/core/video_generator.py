@@ -7,8 +7,6 @@ from .utils.AI.audioAI import AudioAI
 import os
 from .utils.converter.video_converter import VideoConverter
 
-# import print error
-
 
 class VideoGenerator:
     def __init__(
@@ -172,6 +170,16 @@ class VideoGenerator:
         print(script)
 
     def generate_images(self, image_prompts=[], image_path="images"):
+        """
+        Generates images based on the given prompts.
+
+        Args:
+            image_prompts (list, optional): List of image prompts. Defaults to [].
+            image_path (str, optional): The path to save the generated images. Defaults to "images".
+
+        Returns:
+            list: List of paths to the generated images.
+        """
         try:
             image_ai = ImageAI()
             image_paths = []
@@ -197,6 +205,16 @@ class VideoGenerator:
             return None
 
     def generate_subtiles(self, audio_path, word_timestamps=True):
+        """
+        Generates subtitles for the given audio.
+
+        Args:
+            audio_path (str): The path to the audio file.
+            word_timestamps (bool, optional): Whether to include word timestamps in the subtitles. Defaults to True.
+
+        Returns:
+            list: List of subtitle entries.
+        """
         audio_ai = AudioAI()
         subs = audio_ai.get_transcription(audio_path, word_timestamps)
         print(subs)
@@ -217,6 +235,11 @@ class VideoGenerator:
 
         Args:
             video_dir (str): The directory containing the video files.
+            output_file (str, optional): The output file path for the video. Defaults to "video.mp4".
+            subtitle_options (dict, optional): Options for the subtitles. Defaults to {"font_color": "yellow", "font_size": 60, "font": "liberation-sans"}.
+
+        Returns:
+            str: The path to the generated video file.
         """
         try:
             video_converter = VideoConverter()

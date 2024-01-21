@@ -1,6 +1,8 @@
 from abc import ABC, abstractmethod
 from langchain_community.document_loaders import YoutubeLoader
 from langchain_community.document_loaders import WebBaseLoader
+from youtube_transcript_api import YouTubeTranscriptApi
+import urllib.parse as urlparse
 
 
 class TextDownloader(ABC):
@@ -49,6 +51,33 @@ class BlogDownloader(TextDownloader):
 
 
 class YouTubeTranscriptDownloader(TextDownloader):
+    def video_id(self, value):
+        """
+        Examples:
+        - http://youtu.be/SA2iWivDJiE
+        - http://www.youtube.com/watch?v=_oPAwA_Udwc&feature=feedu
+        - http://www.youtube.com/embed/SA2iWivDJiE
+        - http://www.youtube.com/v/SA2iWivDJiE?version=3&amp;hl=en_US
+        - https://www.youtube.com/shorts/0kIhwa1e_5M
+        ParseResult(scheme='https', netloc='www.youtube.com', path='/shorts/0kIhwa1e_5M', params='', query='', fragment='')
+        """
+        query = urlparse.urlparse(value)
+        print(query)
+        if query.hostname == "youtu.be":
+            return query.path[1:]
+        if query.hostname in ("www.youtube.com", "youtube.com"):
+            if query.path == "/watch":
+                p = urlparse.parse_qs(query.query)
+                return p["v"][0]
+            if query.path[:7] == "/embed/":
+                return query.path.split("/")[2]
+            if query.path[:3] == "/v/":
+                return query.path.split("/")[2]
+            if query.path.startswith("/shorts/"):
+                return query.path.split("/")[2]
+        # fail?
+        return None
+
     def download_text(
         self, url, add_video_info=False, language=["en"], translation=None
     ):
@@ -66,23 +95,26 @@ class YouTubeTranscriptDownloader(TextDownloader):
                    If an error occurs, returns None and an error message.
         """
         try:
-            loader = YoutubeLoader.from_youtube_url(
-                url,
-                add_video_info=add_video_info,
-                language=language,
-                translation=translation,
-            )
-            transcript = loader.load()
-            text = " ".join([t["text"] for t in transcript])
-            return text, "YouTube transcript downloaded successfully"
+            print(url)
+            video_id = self.video_id(url)
+            print("video_id", video_id)
+            transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+            print(transcript_list)
+            transcript = transcript_list.find_generated_transcript(["en"])
+            transcript_text = ""
+            try:
+                for line in transcript.fetch():
+                    transcript_text += (line.get("text")) + " "
+            except Exception as e:
+                print(e)
+                return None, f"An error occurred while downloading transcript: {e}"
+            return transcript_text, "Transcript downloaded successfully"
         except Exception as e:
-            return None, f"An error occurred while downloading YouTube transcript: {e}"
+            print(e)
+            return None, f"An error occurred while downloading transcript: {e}"
 
 
 if __name__ == "__main__":
-    # Test BlogDownloader
-    blog_downloader = BlogDownloader()
-    text, msg = blog_downloader.download_text(
-        "https://www.ndtv.com/offbeat/parle-g-replaces-iconic-girls-image-with-this-instagram-influencers-face-heres-why-4753827"
-    )
-    print(text, msg)
+    youtube = YouTubeTranscriptDownloader()
+    text, msg = youtube.download_text("https://www.youtube.com/watch?v=IN4Gftz6_ZM")
+    print(text)

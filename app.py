@@ -33,10 +33,26 @@ st.set_page_config(page_title="noobies.ai", page_icon="📷", layout="centered")
 
 
 def main():
+    """
+    This function is the entry point of the application.
+    It displays a user interface with four cards, each representing a different functionality.
+    The cards contain images and links to different pages of the application.
+    """
+    # Rest of the code...
+
+
+def main():
     # show logo image in center
 
     _, img_col, _ = st.columns([1, 3, 1])
     img_col.image("./static/images/neon_logo.png")
+
+    st.info(
+        """
+            **noobies.ai** is an open-source project designed to empower users in AI-driven content generation. It provides an extensive set of tools for creating diverse content, including blogs, images, videos, and audio. The project aims to simplify AI-based content creation while ensuring accessibility and user-friendliness.
+                """
+    )
+
     with st.sidebar:
         _, img_col, _ = st.columns([1, 3, 1])
         img_col.image("./static/images/neon_logo.png")
@@ -121,6 +137,15 @@ def main():
                 },
             },
         )
+
+    st.header("Videos created using noobies.ai")
+
+    vid_col_1, vid_col_2, vid_col_3 = st.columns(3)
+    vid_col_1.video("./static/videos/noobies_intro.mp4")
+    vid_col_1.text("noobies.ai")
+
+    vid_col_2.video("./static/videos/lab_lab_intro.mp4")
+    vid_col_2.text("Lab Lab")
 
 
 if __name__ == "__main__":

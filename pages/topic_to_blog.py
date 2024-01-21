@@ -10,6 +10,9 @@ import pandas as pd
 def get_clarifai_pat():
     """
     Get the Clarifai PAT from the user.
+
+    Returns:
+        str: The Clarifai PAT entered by the user.
     """
     with st.sidebar:
         st.subheader("Add your Clarifai PAT")
@@ -42,12 +45,14 @@ import shutil
 def create_download_zip(temp_dir, blog_dir):
     """
     Create a zip file in the temp directory.
+
+    Parameters:
+        temp_dir (str): The path to the temporary directory.
+        blog_dir (str): The path to the blog directory.
+
+    Returns:
+        None
     """
-
-    # i want to zip the blog_dir
-    # zip should be called bolg_dir.split("/")[-1] + ".zip"
-    # zip should be in temp_dir
-
     try:
         shutil.make_archive(
             os.path.join(temp_dir, blog_dir.split("/")[-1]), "zip", blog_dir
@@ -66,6 +71,12 @@ def create_download_zip(temp_dir, blog_dir):
 def convert_to_dict(blog_metadata):
     """
     Convert blog metadata to a dictionary.
+
+    Parameters:
+        blog_metadata (str): The blog metadata string.
+
+    Returns:
+        dict: The blog metadata dictionary.
     """
     try:
         blog_metadata_dict = {}
@@ -84,6 +95,17 @@ def convert_to_dict(blog_metadata):
 def generate_blog(blog_url, generate_ai_images, is_topic=False):
     """
     Generate a new blog based on the given URL.
+
+    Parameters:
+        blog_url (str): The URL of the blog to generate.
+        generate_ai_images (bool): Flag indicating whether to generate AI images for the blog.
+        is_topic (bool, optional): Flag indicating whether the blog is a topic blog. Defaults to False.
+
+    Raises:
+        Exception: If there is an error generating the blog.
+
+    Returns:
+        None
     """
     try:
         temp_dir = tempfile.TemporaryDirectory()
@@ -144,6 +166,10 @@ def generate_blog(blog_url, generate_ai_images, is_topic=False):
 def main():
     """
     Main function to run the application.
+    This function displays a user interface for generating a blog based on a given topic.
+    It takes user inputs for the topic and whether to generate AI images.
+    Upon clicking the "GENERATE" button, it calls the generate_blog function to generate the blog.
+    If an error occurs during the process, it displays an error message.
     """
     try:
         _, img_col, _ = st.columns([1, 3, 1])
@@ -172,4 +198,7 @@ def main():
 
 if __name__ == "__main__":
     get_clarifai_pat()
-    main()
+    if os.environ.get("CLARIFAI_PAT") is None:
+        st.error("Please add your Clarifai PAT in the sidebar.")
+    else:
+        main()

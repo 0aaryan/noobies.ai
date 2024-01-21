@@ -5,15 +5,12 @@ from clarifai.modules.css import ClarifaiStreamlitCSS
 from noobies_ai.core.video_generator import VideoGenerator
 
 
-# allow unsafe html
-
-# page icon should be website icon
-st.set_page_config(page_title="Topic to Video", page_icon=" 📽️ ", layout="centered")
-
-
 def get_clarifai_pat():
     """
     Get the Clarifai PAT from the user.
+
+    Returns:
+        str: The Clarifai PAT entered by the user.
     """
     with st.sidebar:
         st.subheader("Add your Clarifai PAT")
@@ -27,6 +24,9 @@ def get_clarifai_pat():
 
 
 def init():
+    """
+    Initialize the session variables.
+    """
     session_variables = [
         "video_script",
         "audio_path",
@@ -42,6 +42,12 @@ def init():
 
 
 def generate_video():
+    """
+    Generates a video based on user inputs.
+
+    Returns:
+        None
+    """
     try:
         video_generator = VideoGenerator()
         with st.form(key="generate_video_form"):
@@ -65,7 +71,7 @@ def generate_video():
                     "Select Language 🌐", video_generator.get_languages()
                 )
                 num_of_images = st.number_input(
-                    value=5, min_value=1, max_value=10, label="Number of Images 🖼️"
+                    value=5, min_value=1, max_value=20, label="Number of Images 🖼️"
                 )
             _, center, _ = st.columns([2, 3, 1])
             with center:
@@ -239,4 +245,7 @@ def main():
 if __name__ == "__main__":
     init()
     get_clarifai_pat()
-    main()
+    if os.environ.get("CLARIFAI_PAT") is None:
+        st.error("Please add your Clarifai PAT in the sidebar.")
+    else:
+        main()

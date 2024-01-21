@@ -84,6 +84,17 @@ def convert_to_dict(blog_metadata):
 def generate_blog(blog_url, generate_ai_images, is_topic=False):
     """
     Generate a new blog based on the given URL.
+
+    Parameters:
+        blog_url (str): The URL of the blog to generate.
+        generate_ai_images (bool): Flag indicating whether to generate AI images for the blog.
+        is_topic (bool, optional): Flag indicating whether the blog is a topic. Defaults to False.
+
+    Raises:
+        Exception: If there is an error generating the blog.
+
+    Returns:
+        None
     """
     try:
         temp_dir = tempfile.TemporaryDirectory()
@@ -172,4 +183,9 @@ def main():
 
 if __name__ == "__main__":
     get_clarifai_pat()
-    main()
+    if "CLARIFAI_PAT" not in os.environ:
+        st.error(
+            "Please add your Clarifai PAT in the sidebar. You can get your PAT from https://portal.clarifai.com/user/applications."
+        )
+    else:
+        main()

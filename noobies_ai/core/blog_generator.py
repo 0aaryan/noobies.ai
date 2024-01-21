@@ -20,32 +20,35 @@ class BlogGenerator:
         Initialize the BlogGenerator class.
 
         Args:
-            model_id (str): The ID of the text AI model to use. Defaults to None.
-            prompt (str): The prompt template for generating the blog. Defaults to GENERATE_BLOG_FROM_BLOG.
-            syntax (str): The syntax to use for the generated blog. Defaults to HUGO.
+            model_id (str, optional): The ID of the text AI model to use. Defaults to None.
+            prompt (str, optional): The prompt template for generating the blog. Defaults to GENERATE_BLOG_FROM_BLOG.
+            syntax (str, optional): The syntax to use for the generated blog. Defaults to HUGO.
         """
+
         self.model_id = model_id
         self.prompt = prompt
         self.syntax = syntax
 
     def generate_text(
         self,
-        url,
-        summary=False,
-        instructions="",
-        is_topic=False,
-    ):
+        url: str,
+        summary: bool = False,
+        instructions: str = "",
+        is_topic: bool = False,
+    ) -> str:
         """
         Generate text for the blog.
 
         Args:
             url (str): The URL of the blog.
-            summary (bool): Whether to include a summary in the generated blog. Defaults to False.
-            instructions (str): Additional instructions for the text AI model. Defaults to "".
+            summary (bool, optional): Whether to include a summary in the generated blog. Defaults to False.
+            instructions (str, optional): Additional instructions for the text AI model. Defaults to "".
+            is_topic (bool, optional): Whether the input URL is a topic or a blog. Defaults to False.
 
         Returns:
             str: The generated blog text.
         """
+
         try:
             if not is_topic:
                 blog_downloader = BlogDownloader()
@@ -82,21 +85,22 @@ class BlogGenerator:
 
     def generate_images(
         self,
-        prompts,
-        image_path="images",
-        infrence_params=None,
-    ):
+        prompts: list,
+        image_path: str = "images",
+        infrence_params: dict = None,
+    ) -> bool:
         """
         Generate images for the blog.
 
         Args:
             prompts (list): List of prompts for generating images.
-            image_path (str): The path to save the generated images. Defaults to "images".
-            infrence_params (dict): Inference parameters for generating images. Defaults to None.
+            image_path (str, optional): The path to save the generated images. Defaults to "images".
+            infrence_params (dict, optional): Inference parameters for generating images. Defaults to None.
 
         Returns:
             bool: True if images are generated successfully, False otherwise.
         """
+
         try:
             image_converter = ImageConverter()
             if infrence_params is None:
@@ -127,7 +131,7 @@ class BlogGenerator:
             print(f"Error generating images: {e}")
             return False
 
-    def get_prompts(self, blog_json):
+    def get_prompts(self, blog_json: dict) -> list:
         """
         Get the prompts for generating images from the blog JSON.
 
@@ -137,6 +141,7 @@ class BlogGenerator:
         Returns:
             list: List of prompts for generating images.
         """
+
         prompts = []
         try:
             title_image = blog_json["title_image"]
@@ -151,7 +156,7 @@ class BlogGenerator:
             print(f"Error getting prompts: {e}")
             return []
 
-    def convert_to_markdown(self, blog_dir):
+    def convert_to_markdown(self, blog_dir: str) -> str:
         """
         Convert the blog JSON to markdown format.
 
@@ -161,6 +166,7 @@ class BlogGenerator:
         Returns:
             str: The markdown content of the blog.
         """
+
         try:
             converter = BlogConverter(blog_dir)
             markdown_content = converter.json_to_hugo()
@@ -173,30 +179,32 @@ class BlogGenerator:
 
     def generate_blog(
         self,
-        url,
-        summary=False,
-        instructions="",
-        generate_images=False,
-        infrence_params=None,
-        debug=False,
-        base_dir="./",
-        is_topic=False,
-    ):
+        url: str,
+        summary: bool = False,
+        instructions: str = "",
+        generate_images: bool = False,
+        infrence_params: dict = None,
+        debug: bool = False,
+        base_dir: str = "./",
+        is_topic: bool = False,
+    ) -> dict:
         """
         Generate the complete blog.
 
         Args:
             url (str): The URL of the blog.
-            summary (bool): Whether to include a summary in the generated blog. Defaults to False.
-            instructions (str): Additional instructions for the text AI model. Defaults to "".
-            generate_images (bool): Whether to generate images for the blog. Defaults to False.
-            infrence_params (dict): Inference parameters for generating images. Defaults to None.
-            debug (bool): Whether to print debug information. Defaults to False.
-            base_dir (str): The base directory to save the generated blog. Defaults to "./".
+            summary (bool, optional): Whether to include a summary in the generated blog. Defaults to False.
+            instructions (str, optional): Additional instructions for the text AI model. Defaults to "".
+            generate_images (bool, optional): Whether to generate images for the blog. Defaults to False.
+            infrence_params (dict, optional): Inference parameters for generating images. Defaults to None.
+            debug (bool, optional): Whether to print debug information. Defaults to False.
+            base_dir (str, optional): The base directory to save the generated blog. Defaults to "./".
+            is_topic (bool, optional): Whether the input URL is a topic or a blog. Defaults to False.
 
         Returns:
             dict: The generated blog data.
         """
+
         try:
             if debug:
                 print("Generating Blog")
