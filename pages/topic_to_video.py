@@ -5,7 +5,7 @@ from clarifai.modules.css import ClarifaiStreamlitCSS
 from noobies_ai.core.video_generator import VideoGenerator
 
 
-st.set_page_config(page_title="Topic to Video", page_icon="📷", layout="centered)
+st.set_page_config(page_title="Topic to Video", page_icon="📷", layout="centered")
 
 
 def get_clarifai_pat():
