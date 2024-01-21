@@ -29,17 +29,30 @@ def get_image_data(img_path):
     return data
 
 
+def showcase():
+    st.header("Videos created using noobies.ai")
+
+    vid_col_1, vid_col_2, vid_col_3 = st.columns(3)
+    vid_col_1.video("./static/videos/noobies_intro.mp4")
+    vid_col_1.text("NOOBIES.AI : The AI Content Generator")
+
+    vid_col_2.video("./static/videos/lab_lab_intro.mp4")
+    vid_col_2.text("Lab Lab AI : Community of AI Enthusiasts")
+
+    vid_col_3.video("./static/videos/clarifai_intro.mp4")
+    vid_col_3.text("Clarifai : AI for Everyone")
+
+    st.header("Blogs created using noobies.ai")
+    blog_col_1, blog_col_2, blog_col_3 = st.columns([1, 3, 1])
+    components.iframe(
+        "https://stuckaryan.tech/blogs/how_joining_a_lablab_ai_hackathon_can_boost_your_career/",
+        scrolling=True,
+        height=500,
+    )
+
+
 # page icon should be image camera
 st.set_page_config(page_title="noobies.ai", page_icon="📷", layout="centered")
-
-
-def main():
-    """
-    This function is the entry point of the application.
-    It displays a user interface with four cards, each representing a different functionality.
-    The cards contain images and links to different pages of the application.
-    """
-    # Rest of the code...
 
 
 def main():
@@ -53,13 +66,15 @@ def main():
             **noobies.ai** is an open-source project designed to empower users in AI-driven content generation. It provides an extensive set of tools for creating diverse content, including blogs, images, videos, and audio. The project aims to simplify AI-based content creation while ensuring accessibility and user-friendliness.
                 """
     )
+    showcase()
 
     with st.sidebar:
         _, img_col, _ = st.columns([1, 3, 1])
         img_col.image("./static/images/neon_logo.png")
+
+    st.header("Tools")
     col1, col2 = st.columns(2)
     col3, col4 = st.columns(2)
-
     # text colour blck
     blog_image_1 = get_image_data("./static/images/blog1.png")
     video_image_2 = get_image_data("./static/images/video2.png")
@@ -138,26 +153,6 @@ def main():
                 },
             },
         )
-
-    st.header("Videos created using noobies.ai")
-
-    vid_col_1, vid_col_2, vid_col_3 = st.columns(3)
-    vid_col_1.video("./static/videos/noobies_intro.mp4")
-    vid_col_1.text("NOOBIES.AI : The AI Content Generator")
-
-    vid_col_2.video("./static/videos/lab_lab_intro.mp4")
-    vid_col_2.text("Lab Lab AI : Community of AI Enthusiasts")
-
-    vid_col_3.video("./static/videos/clarifai_intro.mp4")
-    vid_col_3.text("Clarifai : AI for Everyone")
-
-    st.header("Blogs created using noobies.ai")
-    blog_col_1, blog_col_2, blog_col_3 = st.columns([1, 3, 1])
-    components.iframe(
-        "https://nerdtech.live/post/nerdtech-blogs/a_complete_guide_to_opening_a_demat_account_with_hdfc_bank/",
-        scrolling=True,
-        height=500,
-    )
 
 
 if __name__ == "__main__":
