@@ -3,6 +3,7 @@ from clarifai.modules.css import ClarifaiStreamlitCSS
 import base64
 from streamlit_card import card
 import os
+import streamlit.components.v1 as components
 
 
 def get_clarifai_pat():
@@ -142,10 +143,21 @@ def main():
 
     vid_col_1, vid_col_2, vid_col_3 = st.columns(3)
     vid_col_1.video("./static/videos/noobies_intro.mp4")
-    vid_col_1.text("noobies.ai")
+    vid_col_1.text("NOOBIES.AI : The AI Content Generator")
 
     vid_col_2.video("./static/videos/lab_lab_intro.mp4")
-    vid_col_2.text("Lab Lab")
+    vid_col_2.text("Lab Lab AI : Community of AI Enthusiasts")
+
+    vid_col_3.video("./static/videos/clarifai_intro.mp4")
+    vid_col_3.text("Clarifai : AI for Everyone")
+
+    st.header("Blogs created using noobies.ai")
+    blog_col_1, blog_col_2, blog_col_3 = st.columns([1, 3, 1])
+    components.iframe(
+        "https://nerdtech.live/post/nerdtech-blogs/a_complete_guide_to_opening_a_demat_account_with_hdfc_bank/",
+        scrolling=True,
+        height=500,
+    )
 
 
 if __name__ == "__main__":
