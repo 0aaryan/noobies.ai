@@ -30,24 +30,53 @@ def get_image_data(img_path):
 
 
 def showcase():
-    st.header("Videos created using noobies.ai")
-
-    vid_col_1, vid_col_2, vid_col_3 = st.columns(3)
-    vid_col_1.video("./static/videos/noobies_intro.mp4")
-    vid_col_1.text("NOOBIES.AI : The AI Content Generator")
-
-    vid_col_2.video("./static/videos/lab_lab_intro.mp4")
-    vid_col_2.text("Lab Lab AI : Community of AI Enthusiasts")
-
-    vid_col_3.video("./static/videos/clarifai_intro.mp4")
-    vid_col_3.text("Clarifai : AI for Everyone")
-
-    st.header("Blogs created using noobies.ai")
+    st.header("📚 Blogs created using noobies.ai")
     blog_col_1, blog_col_2, blog_col_3 = st.columns([1, 3, 1])
     components.iframe(
         "https://stuckaryan.tech/blogs/how_joining_a_lablab_ai_hackathon_can_boost_your_career/",
         scrolling=True,
-        height=500,
+        height=400,
+    )
+    st.markdown("--- ")
+    st.header("🎥 Videos created using noobies.ai")
+
+    vid_col_3, vid_col_2, vid_col_1 = st.columns(3)
+    vid_col_1.video("./static/videos/noobies_intro.webm")
+    vid_col_1.text("🤖 NOOBIES.AI : The AI Content Generator")
+
+    vid_col_2.video("./static/videos/lab_lab_intro.webm")
+    vid_col_2.text("🔬 Lab Lab AI : Community of AI Enthusiasts")
+
+    vid_col_3.video("./static/videos/clarifai_intro.webm")
+    vid_col_3.text("🧠 Clarifai : AI for Everyone")
+
+    st.markdown("--- ")
+
+
+def footer():
+    # add socials also my website stuckaryan.tech mail aroraryan826@gmail.com
+    st.markdown("## Connect with us")
+    # use globe for website
+    st.markdown(
+        """
+        <a href="https://www.youtube.com/@StuckAryan" target="_blank">
+            <img src="https://img.shields.io/badge/YouTube-000000?style=for-the-badge&logo=youtube&logoColor=white"/>
+        </a>
+        <a href="https://stuckaryan.tech" target="_blank">
+            <img src="https://img.shields.io/badge/Website-000000?style=for-the-badge&logo=google-chrome&logoColor=white"/>
+        </a>
+        <a href="https://www.github.com/0aaryan" target="_blank">
+            <img src="https://img.shields.io/badge/GitHub-000000?style=for-the-badge&logo=github&logoColor=white"/>
+        </a>
+        <a href="https://www.linkedin.com/in/am-aryan-arora/" target="_blank">
+            <img src="https://img.shields.io/badge/LinkedIn-000000?style=for-the-badge&logo=linkedin&logoColor=white"/>
+        </a>
+        <a href="mailto:aroraryan826@gmail.com?subject=Subject%20Here&body=Hello%20Aryan" target="_blank">
+            <img src="https://img.shields.io/badge/Gmail-000000?style=for-the-badge&logo=gmail&logoColor=white"/>
+        </a>
+
+        """,
+        unsafe_allow_html=True,
     )
 
 
@@ -63,18 +92,20 @@ def main():
 
     st.info(
         """
-            **noobies.ai** is an open-source project designed to empower users in AI-driven content generation. It provides an extensive set of tools for creating diverse content, including blogs, images, videos, and audio. The project aims to simplify AI-based content creation while ensuring accessibility and user-friendliness.
-                """
+        **Welcome to noobies.ai!** 🚀
+
+        noobies.ai is an open-source project designed to empower users in AI-driven content generation. It provides an extensive set of tools for creating diverse content, including blogs, images, videos, and audio. The project aims to simplify AI-based content creation while ensuring accessibility and user-friendliness.
+        """
     )
-    showcase()
 
     with st.sidebar:
         _, img_col, _ = st.columns([1, 3, 1])
         img_col.image("./static/images/neon_logo.png")
-
-    st.header("Tools")
+    st.markdown("--- ")
+    st.header("🛠️ Tools")
     col1, col2 = st.columns(2)
     col3, col4 = st.columns(2)
+    st.markdown("--- ")
     # text colour blck
     blog_image_1 = get_image_data("./static/images/blog1.png")
     video_image_2 = get_image_data("./static/images/video2.png")
@@ -83,7 +114,7 @@ def main():
     # add block border to title
     with col1:
         hasClicked = card(
-            title="BLOG TO BLOG",
+            title="📝 BLOG TO BLOG",
             text="",
             image=blog_image_1,
             url="/blog_to_blog",
@@ -105,7 +136,7 @@ def main():
 
     with col2:
         hasClicked = card(
-            title="TOPIC TO BLOG",
+            title="📚 TOPIC TO BLOG",
             text="",
             image=blog_image_2,
             url="/topic_to_blog",
@@ -122,7 +153,7 @@ def main():
 
     with col3:
         hasClicked = card(
-            title=" TOPIC TO VIDEO",
+            title="🎬 TOPIC TO VIDEO",
             text="",
             image=video_image_1,
             url="/topic_to_video",
@@ -139,7 +170,7 @@ def main():
 
     with col4:
         hasClicked = card(
-            title="VIDEO TO VIDEO",
+            title="🎥 VIDEO TO VIDEO",
             text="",
             image=video_image_2,
             url="./pages/blog_to_video.py",
@@ -154,7 +185,10 @@ def main():
             },
         )
 
+    showcase()
+
 
 if __name__ == "__main__":
     get_clarifai_pat()
     main()
+    footer()

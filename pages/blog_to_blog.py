@@ -10,7 +10,7 @@ import pandas as pd
 # allow unsafe html
 
 # page icon should be website icon
-st.set_page_config(page_title="Blog to Blog", page_icon=" 📝 ", layout="centered")
+st.set_page_config(page_title="Blog to Blog", page_icon="📚")
 
 
 # ClarifaiStreamlitCSS.insert_default_css(st)

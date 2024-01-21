@@ -6,6 +6,9 @@ from noobies_ai.core.video_generator import VideoGenerator
 from noobies_ai.core.utils.downloader.text_downloader import YouTubeTranscriptDownloader
 
 
+st.set_page_config(page_title="Video to Video", page_icon="📷", layout="centered"
+)
+
 def get_clarifai_pat():
     """
     Get the Clarifai PAT from the user.

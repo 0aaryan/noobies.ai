@@ -5,6 +5,9 @@ from clarifai.modules.css import ClarifaiStreamlitCSS
 from noobies_ai.core.video_generator import VideoGenerator
 
 
+st.set_page_config(page_title="Topic to Video", page_icon="📷", layout="centered"
+)
+
 def get_clarifai_pat():
     """
     Get the Clarifai PAT from the user.
@@ -105,7 +108,7 @@ def generate_video():
                 st.text_area("Description 📝", value=description)
 
             with col2:
-                with st.expander("Script 📜" ,expanded=False):
+                with st.expander("Script 📜  ,expanded=False):
                     for i, part in enumerate(script_parts):
                         st.text_input(f"Part {i+1} ✏️", value=part, key=f"part{i+1}")
 
@@ -116,7 +119,7 @@ def generate_video():
                         )
 
             with col2:
-                with st.expander("Audio Options 🎵" ,expanded=False):
+                with st.expander("Audio Options 🎵  ,expanded=False):
                     voice_option = st.selectbox(
                         options=video_generator.get_voice_ids().keys(),
                         label="Voice 🔊",

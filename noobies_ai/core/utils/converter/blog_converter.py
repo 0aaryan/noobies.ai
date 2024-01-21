@@ -33,7 +33,7 @@ class BlogConverter:
                 content = content_item["content"]
                 image = content_item["image"]
                 if idx != 0:
-                    markdown_content += f'\n---\n# {heading}\n\n![{image} prompt]({image_path} "{image}")\n\n{content}\n\n\n'
+                    markdown_content += f'\n---\n# {heading}\n\n![{image}]({image_path} "{image}")\n\n{content}\n\n\n'
                 else:
                     markdown_content += f"\n---\n# {heading}\n\n{content}\n\n\n"
 
