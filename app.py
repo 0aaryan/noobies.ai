@@ -173,7 +173,7 @@ def main():
             title="🎥 VIDEO TO VIDEO",
             text="",
             image=video_image_2,
-            url="./pages/blog_to_video.py",
+            url="/blog_to_video.py",
             key="audio_card",
             styles={
                 "card": {
