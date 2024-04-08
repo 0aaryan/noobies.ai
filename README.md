@@ -1,17 +1,8 @@
 <!--- 
 {
  "title": "noobies.ai - AI-Powered Content Creation Platform",
- "badges": [
-   {
-     "icon": "https://clarifai.com/api/0aaryan/noobies/modules/content/badge",
-     "label": "content"
-   },
-   {
-     "icon": "https://img.shields.io/badge/license-MIT-blue.svg",
-     "label": "License"
-   }
- ],
- "content": "noobies.ai is an open-source project designed to empower users in AI-driven content generation. It provides an extensive set of tools for creating diverse content, including blogs, images, videos, and audio. The project aims to simplify AI-based content creation while ensuring accessibility and user-friendliness.",
+ "badges": ["Langchian","hackathon","Generative AI"],
+ "content": "noobies.ai is an open-source project designed to empower users in AI-driven content generation. It provides an extensive set of tools for creating diverse content, including blogs, images, videos, and audio.",
  "featured": {
    "link": "https://github.com/0aaryan/noobies.ai",
    "name": "Repository"
